@@ -1,26 +1,23 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { DataSource, DataSourceOptions } from 'typeorm';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { DataSource } from 'typeorm';
 
 ConfigModule.forRoot({
-	envFilePath: '.env',
+  envFilePath: '.env',
 });
 
 const env = new ConfigService();
 
-export const DataSourceConfig: DataSourceOptions = {
-	type: env.get('DB_TYPE'),
-	host: env.get('DB_HOST'),
-	port: env.get('DB_PORT'),
-	username: env.get('DB_USER'),
-	password: '',
-	database: env.get('DB_DATABASE'),
-	entities: [__dirname+'/../**/**/*.entity{.ts, .js}'],
-	migrations: [__dirname+'/../../migrations/*{.ts,.js}'],
-	synchronize: false,
-	migrationsRun: true,
-	logging: false,
-	namingStrategy: new SnakeNamingStrategy()
+export const DataSourceConfig = {
+  type: env.get('DB_TYPE'),
+  host: env.get('DB_HOST'),
+  username: env.get('DB_USER'),
+  password: env.get('DB_PASSWORD'),
+  database: env.get('DB_NAME'),
+  entities: [__dirname + '/../**/**/*.entity{.ts, .js}'],
+  migrations: [__dirname + '/../../migrations/*{.ts,.js}'],
+  synchronize: false,
+  migrationsRun: true,
+  logging: false,
 };
 
-export const AppDS =  new DataSource(DataSourceConfig);
+export const AppDS = new DataSource(DataSourceConfig);

@@ -5,6 +5,7 @@ import * as morgan from 'morgan';
 import { CORS } from './constans';
 
 async function bootstrap() {
+  
   const app = await NestFactory.create(AppModule);
   const env = app.get(ConfigService);
   // Morgan para los log´s
